@@ -93,12 +93,22 @@ def main():
     parser.add_argument('--output-file', '-o', dest='output', default='/dev/stdout',
                         help='File to write the CSV in.')
     parser.add_argument('--gpg-agent', '-a', dest='agent', help='Use GPG agent.', action='store_true')
+    parser.add_argument('paths', metavar='PATH', nargs='*',
+                        help='Password store files to export.')
 
     args = parser.parse_args()
 
     password_store = os.path.expanduser(args.directory)
 
-    encrypted_files = traverse(password_store)
+    if len(args.paths) > 0:
+        encrypted_files = []
+        for path in args.paths:
+            if os.path.isdir(path):
+                encrypted_files.extend(traverse(path))
+            else:
+                encrypted_files.append(path)
+    else:
+        encrypted_files = traverse(password_store)
     decrypted_files = decrypt(encrypted_files, args.binary, args.agent)
 
     csv_data = parse(password_store, decrypted_files)
