@@ -88,9 +88,9 @@ def main():
 
     parser.add_argument('--directory', '-d', default='~/.password-store',
                         help='Directory of the password store.')
-    parser.add_argument('--gpg-binary', '-b', dest='binary', default='/usr/local/bin/gpg',
+    parser.add_argument('--gpg-binary', '-b', dest='binary', default='gpg',
                         help='Path to the GPG binary.')
-    parser.add_argument('--output-file', '-o', dest='output', default='pass.csv',
+    parser.add_argument('--output-file', '-o', dest='output', default='/dev/stdout',
                         help='File to write the CSV in.')
     parser.add_argument('--gpg-agent', '-a', dest='agent', help='Use GPG agent.', action='store_true')
 
